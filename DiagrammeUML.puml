@@ -1,0 +1,135 @@
+@startuml HomeSkolar
+
+' Layout configuration
+skinparam linetype ortho
+skinparam padding 2
+skinparam roundcorner 5
+skinparam class {
+    BackgroundColor white
+    ArrowColor #2688d4
+    BorderColor #2688d4
+}
+
+' Placement hints
+together {
+  abstract class User
+  class Student
+  class Tutor
+}
+
+together {
+  class Calendar
+  class CalendarEvent
+}
+
+package "User Management" {
+    abstract class User {
+        +id: int
+        +name: string
+        +email: string
+        -password: string
+        --
+        +login(): boolean
+        +updateProfile(): void
+        +viewCalendar(): Calendar
+    }
+
+    class Student {
+        +tutorId: int
+        --
+        +viewTasks(): List<Task>
+        +viewMessages(): List<Message>
+        +pinMessage(messageId: int): void
+    }
+
+    class Tutor {
+        +studentIds: List<int>
+        --
+        +assignTask(task: Task, studentId: int): void
+        +scheduleAppointment(appointment: Appointment): void
+    }
+}
+
+package "Calendar Management" {
+    class Calendar {
+        +userId: int
+        --
+        +addEvent(event: CalendarEvent): void
+        +removeEvent(eventId: int): void
+        +getMonthlyView(): List<CalendarEvent>
+    }
+
+    class CalendarEvent {
+        +title: string
+        +startDate: datetime
+        +type: EventType
+        --
+        +update(): void
+        +cancel(): void
+    }
+
+    enum EventType {
+        APPOINTMENT
+        TASK_DEADLINE
+    }
+}
+
+package "Task Management" {
+    class Task {
+        +title: string
+        +description: string
+        +dueDate: datetime
+        +status: TaskStatus
+        +assignedTo: int
+        --
+        +updateStatus(): void
+    }
+
+    enum TaskStatus {
+        PENDING
+        IN_PROGRESS
+        COMPLETED
+    }
+}
+
+package "Communication" {
+    class Message {
+        +content: string
+        +senderId: int
+        +receiverId: int
+        +isPinned: boolean
+        +isRead: boolean
+        --
+        +markAsRead(): void
+        +pin(): void
+    }
+
+    class Appointment {
+        +title: string
+        +dateTime: datetime
+        +duration: int
+        +tutorId: int
+        +studentId: int
+        --
+        +createTask(): Task
+        +addToCalendar(): CalendarEvent
+    }
+}
+
+' Relations
+User <|-- Student
+User <|-- Tutor
+Student "1" --right-- "1" Tutor : assigned to
+Student "1" --right-- "*" Task : has
+Tutor "1" --right-- "*" Task : assigns
+Student "1" --right-- "*" Appointment : participates
+Tutor "1" --right-- "*" Appointment : manages
+Message "*" --right-- "1" Student : receives
+Message "*" --right-- "1" Tutor : receives
+Task -- TaskStatus
+User "1" --down-- "1" Calendar : owns
+Calendar "1" --right-- "*" CalendarEvent : contains
+CalendarEvent -- EventType
+Appointment ..> CalendarEvent : creates
+
+@enduml

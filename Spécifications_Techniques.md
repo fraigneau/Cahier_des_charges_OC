@@ -1,146 +1,69 @@
-# Spécifications Techniques - CodeIguanas
+# Spécifications Techniques - HomeSkolar
 
-## 1. Architecture du projet
+## 1. Architecture générale
 
 ### 1.1. Type d'application
-- **Type** : Application Web.
-- **Architecture** : Client-serveur.
-- **Frontend** : Application web accessible via un navigateur.
-- **Backend** : API REST pour la gestion des données et des fonctionnalités.
+- **Architecture** : Application web avec architecture client-serveur
+  - Application web accessible via navigateur pour faciliter l'accès aux utilisateurs
+  - Pas d'installation requise, compatible tous supports
+  - Interface responsive pour s'adapter à tous les écrans
 
-### 1.2. Technologies recommandées
-- **Frontend** :
-  - Framework : React.js ou Vue.js.
-  - Langages : HTML, CSS, JavaScript (TypeScript recommandé).
-  - Bibliothèque UI : Material-UI ou Tailwind CSS.
-- **Backend** :
-  - Langage : Node.js (avec Express.js) ou Java (Spring Boot).
-  - Base de données : PostgreSQL pour les données relationnelles.
-  - Authentification : JSON Web Tokens (JWT).
-- **Infrastructure** :
-  - Serveur : Hébergement sur un service cloud (AWS, Azure, ou Heroku).
-  - CI/CD : GitHub Actions ou GitLab CI pour l'intégration continue.
-  - Sécurité : HTTPS obligatoire, données sensibles chiffrées.
+### 1.2. Technologies Frontend 
+- **Framework** : React 18
+  - Choisi pour sa grande communauté et sa documentation complète
+  - Facilite la création d'interfaces interactives
+  - Permet un développement rapide avec ses nombreux composants 
 
----
+- **Bibliothèques complémentaires** :
+  - React Router : Navigation entre les pages
+  - React Big Calendar : Gestion du calendrier
+  - Bootstrap : Design responsive
 
-## 2. Gestion des utilisateurs
+### 1.3. Technologies Backend
+- **Framework** : Spring Boot
+  - Choisi pour sa robustesse et sa facilité d'utilisation avec Java
+  - Gestion intégrée de la sécurité
+  - Excellente intégration avec les bases de données
+
+- **Base de données** : MySQL
+  - Solution stable et éprouvée
+  - Facile à maintenir
+  - Adapté au volume de données attendu
+
+## 2. Solutions techniques par fonctionnalité
 
 ### 2.1. Authentification
-- **Mécanisme** : Authentification basée sur JWT.
-- **Flux** :
-  - Lors de la connexion, le serveur génère un token JWT.
-  - Le token est envoyé au client et utilisé pour chaque requête nécessitant une authentification.
-- **Sécurité** :
-  - Mot de passe haché avec bcrypt (minimum 10 rounds).
-  - Limitation des tentatives de connexion pour éviter les attaques par force brute.
+- Système d'authentification Spring Security
+- Gestion des sessions utilisateurs
+- Hachage sécurisé des mots de passe
+- Protection contre les attaques basiques (injection SQL, XSS)
 
-### 2.2. Gestion des rôles
-- **Rôles utilisateurs** : 
-  - Élève : Accès limité à son propre contenu.
-  - Tuteur : Gestion des tâches et interactions avec les élèves assignés.
-  - Administrateur : Gestion des utilisateurs et des relations E-B.
-- **Contrôle d’accès** : Middleware pour vérifier les droits d'accès à chaque endpoint.
+### 2.2. Communication
+- API REST pour les échanges client/serveur
+- Stockage des messages dans MySQL
+- Système simple de notifications en temps réel
+- Possibilité d'épingler les messages importants
 
----
+### 2.3. Calendrier
+- Interface utilisateur avec React Big Calendar
+- Synchronisation via API REST
+- Données stockées dans MySQL
+- Système de notifications pour les rappels
 
-## 3. Communication élève-tuteur
+### 2.4. Gestion des tâches
+- API REST pour la création/modification des tâches
+- Stockage dans MySQL avec statuts (à faire, en cours, terminé)
+- Notifications automatiques pour les échéances
+- Association possible avec les rendez-vous du calendrier
 
-### 3.1. Messagerie
-- **Backend** :
-  - Stockage des messages dans une table relationnelle (exemple : `messages`).
-  - Champs principaux : ID message, ID expéditeur, ID destinataire, contenu, date, état (lu/non lu).
-  - API REST :
-    - `POST /messages` : Envoi de message.
-    - `GET /messages` : Récupération des messages entre deux utilisateurs.
-    - `PATCH /messages/:id` : Marquer un message comme lu.
-- **Frontend** :
-  - Affichage des messages dans un format "discussion".
-  - Option pour épingler un message, enregistré côté serveur.
-- **Notifications** :
-  - WebSockets ou service de notification push pour avertir l’utilisateur en temps réel.
+## 3. Sécurité
+- HTTPS obligatoire
+- Authentification sécurisée
+- Protection des données utilisateurs
+- Validation des données côté serveur et client
 
----
-
-## 4. Planification des rencontres
-
-### 4.1. Calendrier
-- **Backend** :
-  - Stockage des événements dans une table `events`.
-  - Champs principaux : ID événement, titre, description, date, heure, durée, ID utilisateur.
-  - API REST :
-    - `POST /events` : Création d’un événement.
-    - `GET /events` : Récupération des événements par utilisateur.
-    - `PATCH /events/:id` : Modification d’un événement.
-    - `DELETE /events/:id` : Suppression d’un événement.
-- **Frontend** :
-  - Intégration d’une bibliothèque de calendrier (exemple : FullCalendar.js).
-  - Vue hebdomadaire/mensuelle.
-  - Notifications de rappel via des alertes ou un email.
-
----
-
-## 5. Gestion des tâches
-
-### 5.1. Tâches liées aux rencontres
-- **Backend** :
-  - Table `tasks` avec les champs :
-    - ID tâche, ID créateur (élève ou tuteur), ID élève concerné, description, date d’échéance, statut (en cours, terminé).
-  - API REST :
-    - `POST /tasks` : Création d’une tâche.
-    - `GET /tasks` : Récupération des tâches liées à un utilisateur.
-    - `PATCH /tasks/:id` : Mise à jour du statut ou des détails d’une tâche.
-    - `DELETE /tasks/:id` : Suppression d’une tâche.
-- **Frontend** :
-  - Liste des tâches par statut.
-  - Option pour ajouter une tâche personnelle ou liée à une rencontre.
-  - Notifications pour les échéances imminentes.
-
----
-
-## 6. Performance et sécurité
-
-### 6.1. Optimisation des performances
-- Mise en cache des requêtes fréquentes avec Redis.
-- Pagination pour les requêtes longues (messages, tâches).
-- Compression des réponses HTTP avec gzip.
-
-### 6.2. Sécurité
-- **Backend** :
-  - Validation des entrées pour prévenir les injections SQL.
-  - Protection contre les attaques XSS et CSRF.
-  - Chiffrement SSL/TLS pour toutes les communications.
-- **Frontend** :
-  - Validation côté client pour les formulaires.
-  - Protection des données sensibles en localStorage avec expiration du token.
-
----
-
-## 7. Documentation et tests
-
-### 7.1. Documentation
-- Documentation des API avec Swagger ou Postman.
-- Manuel utilisateur pour l’application.
-
-### 7.2. Tests
-- Tests unitaires pour les fonctions critiques (Jest pour Node.js ou JUnit pour Java).
-- Tests d’intégration pour vérifier les interactions entre les modules.
-- Tests d’interface utilisateur avec Cypress ou Selenium.
-
----
-
-## 8. Récapitulatif technique
-
-| **Module**               | **Technologie utilisée**                                    |
-|---------------------------|------------------------------------------------------------|
-| **Frontend**              | React.js, Material-UI, Axios                               |
-| **Backend**               | Node.js (Express), PostgreSQL, JWT                        |
-| **Base de données**       | PostgreSQL                                                 |
-| **Calendrier**            | FullCalendar.js                                           |
-| **Messagerie**            | WebSocket, REST API                                       |
-| **Notifications**         | WebSockets ou Push API                                    |
-| **CI/CD**                 | GitHub Actions, Docker                                    |
-
----
-
-Cette spécification technique servira de guide pour les développeurs durant la mise en œuvre du projet **CodeIguanas**.
+## 4. Performance
+- Optimisation des requêtes base de données
+- Mise en cache des données fréquemment utilisées
+- Chargement optimisé des ressources frontend
+- Pagination des listes (messages, tâches)
