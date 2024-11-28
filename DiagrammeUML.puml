@@ -12,14 +12,14 @@ skinparam class {
 
 ' Placement hints
 together {
-  abstract class User
-  class Student
-  class Tutor
+    abstract class User
+    class Student
+    class Tutor
 }
 
 together {
-  class Calendar
-  class CalendarEvent
+    class Calendar
+    class CalendarEvent
 }
 
 package "User Management" {
