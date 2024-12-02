@@ -2,7 +2,7 @@
 
 ' ========== CONFIGURATION DU STYLE ==========
 !theme toy
-
+left to right direction
 ' Configuration générale
 skinparam backgroundColor #FEFEFE
 skinparam roundCorner 20
@@ -11,8 +11,6 @@ skinparam handwritten false
 
 ' Style des acteurs
 skinparam actor {
-    BorderColor #1E90FF
-    BackgroundColor #87CEFA
     FontName Arial
     FontSize 14
     FontStyle bold
@@ -39,77 +37,72 @@ skinparam rectangle {
 
 ' Style des flèches
 skinparam arrow {
-    Color #4682B4
-    Thickness 1.5
+    Thickness 2
 }
 
 title Diagramme de Cas d'Utilisation de l'Application HomeSkolar
-legend right
-  <b>Légende</b>
-  |= Acteur |= Description |
-  | E | Élève |
-  | T | Tuteur |
-endlegend
 
 ' ========== DÉFINITION DES ACTEURS ==========
-actor "E" as E
-actor "T" as T
+actor "Elève"
+actor "Tuteur"
 
 ' ========== DÉFINITION DES CAS D'UTILISATION ==========
-rectangle "Authentication" {
-    usecase "Sign in" as SignIn
-    usecase "Log in" as LogIn
-}
 
-rectangle "RDV" {
-    usecase "Gestion" as Gestion
-    usecase "Accéder" as Acceder
-}
+rectangle "HomeSkolar" {
 
-rectangle "Task" {
-    usecase "Gestion" as GestionTask
-    usecase "Vision" as VisionTask
-}
+    rectangle "Authentication" {
+        usecase "S'inscrire" as SignIn
+        usecase "Se connecter" as LogIn
+    }
 
-rectangle "Message" {
-    usecase "Send/Receive" as SIR
-    usecase "Pin" as Plan
-}
+    rectangle "Rendez-vous" {
+        usecase "Gerer les rendez-vous" as Gestion
+        usecase "Visualiser les rendez-vous" as Acceder
+    }
 
-rectangle "TaskStudent" {
-    usecase "Send Task" as ST
-}
+    rectangle "Tâches" {
+        usecase "Gerer les tâches" as GestionTask
+        usecase "Visualiser les tâches" as VisionTask
+        usecase "Attribuer des tâches à l'élève" as ST
+    }
 
-rectangle "Notif." {
-    usecase "Notifications" as Notif
+    rectangle "Messages" {
+        usecase "Envoyer et recevoir des messages" as SIR
+        usecase "Epingler des messages" as Plan
+    }
+
+    rectangle "Notifications" {
+        usecase "Recevoir une notification" as Notif
+    }
+
+    ' Notes explicatives
+    note "Authentification\nrequise" as N1
+    SignIn .. N1
+    LogIn .. N1
+
 }
 
 ' ========== RELATIONS ==========
 ' Relations entre acteurs
-T --> E
+Tuteur .-|> Elève : include
 
 ' Relations E
-E --> SignIn
-E --> LogIn
-E --> Acceder
-E --> GestionTask
-E --> VisionTask
-E --> SIR
-E --> Plan
+Elève --> SignIn
+Elève --> LogIn
+Elève --> Acceder
+Elève --> GestionTask
+Elève --> VisionTask
+Elève --> SIR
+Elève --> Plan
 
 ' Relations T
-T --> Gestion
-T --> ST
+Tuteur --> Gestion
+Tuteur --> ST
 
 ' Relations vers Notifications
-ST --> Notif
-GestionTask --> Notif
-Gestion --> Notif
-SIR --> Notif
-
-' Notes explicatives
-note "Authentification\nrequise" as N1
-SignIn .. N1
-LogIn .. N1
+ST ..-|> Notif : include
+GestionTask ..-|> Notif : include
+Gestion ..-|> Notif : include
+SIR ..-|> Notif : include
 
 @enduml
