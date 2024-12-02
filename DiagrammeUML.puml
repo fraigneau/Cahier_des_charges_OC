@@ -22,7 +22,8 @@ together {
     class CalendarEvent
 }
 
-package "User Management" {
+' Moved User Management package before Calendar Management
+package "User Management" #FFFFFF {
     abstract class User {
         +id: int
         +name: string
@@ -50,7 +51,8 @@ package "User Management" {
     }
 }
 
-package "Calendar Management" {
+' Added layout hint to force Calendar Management below User Management
+package "Calendar Management" #FFFFFF {
     class Calendar {
         +userId: int
         --
@@ -67,11 +69,6 @@ package "Calendar Management" {
         +update(): void
         +cancel(): void
     }
-
-    enum EventType {
-        APPOINTMENT
-        TASK_DEADLINE
-    }
 }
 
 package "Task Management" {
@@ -83,12 +80,6 @@ package "Task Management" {
         +assignedTo: int
         --
         +updateStatus(): void
-    }
-
-    enum TaskStatus {
-        PENDING
-        IN_PROGRESS
-        COMPLETED
     }
 }
 
@@ -126,10 +117,10 @@ Student "1" --right-- "*" Appointment : participates
 Tutor "1" --right-- "*" Appointment : manages
 Message "*" --right-- "1" Student : receives
 Message "*" --right-- "1" Tutor : receives
-Task -- TaskStatus
 User "1" --down-- "1" Calendar : owns
 Calendar "1" --right-- "*" CalendarEvent : contains
-CalendarEvent -- EventType
 Appointment ..> CalendarEvent : creates
+
+"User Management" -[hidden]up- "Calendar Management"
 
 @enduml

@@ -1,0 +1,115 @@
+@startuml
+
+' ========== CONFIGURATION DU STYLE ==========
+!theme toy
+
+' Configuration générale
+skinparam backgroundColor #FEFEFE
+skinparam roundCorner 20
+skinparam shadowing true
+skinparam handwritten false
+
+' Style des acteurs
+skinparam actor {
+    BorderColor #1E90FF
+    BackgroundColor #87CEFA
+    FontName Arial
+    FontSize 14
+    FontStyle bold
+}
+
+' Style des cas d'utilisation
+skinparam usecase {
+    BackgroundColor #FFE4B5
+    BorderColor #DAA520
+    FontSize 12
+    FontStyle plain
+    ArrowColor #2F4F4F
+    ArrowThickness 2
+}
+
+' Style des rectangles
+skinparam rectangle {
+    BackgroundColor #FFF0F5
+    BorderColor #FF69B4
+    FontSize 13
+    FontStyle bold
+    BorderThickness 2
+}
+
+' Style des flèches
+skinparam arrow {
+    Color #4682B4
+    Thickness 1.5
+}
+
+title Diagramme de Cas d'Utilisation de l'Application HomeSkolar
+legend right
+  <b>Légende</b>
+  |= Acteur |= Description |
+  | E | Élève |
+  | T | Tuteur |
+endlegend
+
+' ========== DÉFINITION DES ACTEURS ==========
+actor "E" as E
+actor "T" as T
+
+' ========== DÉFINITION DES CAS D'UTILISATION ==========
+rectangle "Authentication" {
+    usecase "Sign in" as SignIn
+    usecase "Log in" as LogIn
+}
+
+rectangle "RDV" {
+    usecase "Gestion" as Gestion
+    usecase "Accéder" as Acceder
+}
+
+rectangle "Task" {
+    usecase "Gestion" as GestionTask
+    usecase "Vision" as VisionTask
+}
+
+rectangle "Message" {
+    usecase "Send/Receive" as SIR
+    usecase "Pin" as Plan
+}
+
+rectangle "TaskStudent" {
+    usecase "Send Task" as ST
+}
+
+rectangle "Notif." {
+    usecase "Notifications" as Notif
+}
+
+' ========== RELATIONS ==========
+' Relations entre acteurs
+T --> E
+
+' Relations E
+E --> SignIn
+E --> LogIn
+E --> Acceder
+E --> GestionTask
+E --> VisionTask
+E --> SIR
+E --> Plan
+
+' Relations T
+T --> Gestion
+T --> ST
+
+' Relations vers Notifications
+ST --> Notif
+GestionTask --> Notif
+Gestion --> Notif
+SIR --> Notif
+
+' Notes explicatives
+note "Authentification\nrequise" as N1
+SignIn .. N1
+LogIn .. N1
+
+@enduml
