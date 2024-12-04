@@ -18,8 +18,6 @@ skinparam actor {
 
 ' Style des cas d'utilisation
 skinparam usecase {
-    BackgroundColor #FFE4B5
-    BorderColor #DAA520
     FontSize 12
     FontStyle plain
     ArrowColor #2F4F4F
@@ -28,8 +26,6 @@ skinparam usecase {
 
 ' Style des rectangles
 skinparam rectangle {
-    BackgroundColor #FFF0F5
-    BorderColor #FF69B4
     FontSize 13
     FontStyle bold
     BorderThickness 2
@@ -84,9 +80,9 @@ rectangle "HomeSkolar" {
 
 ' ========== RELATIONS ==========
 ' Relations entre acteurs
-Tuteur .-|> Elève : include
+Tuteur --|> Elève
 
-' Relations E
+' Relations Elève
 Elève --> SignIn
 Elève --> LogIn
 Elève --> Acceder
@@ -95,7 +91,7 @@ Elève --> VisionTask
 Elève --> SIR
 Elève --> Plan
 
-' Relations T
+' Relations Tuteur
 Tuteur --> Gestion
 Tuteur --> ST
 
