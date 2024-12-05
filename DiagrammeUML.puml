@@ -36,12 +36,12 @@ together {
         +updateProfile(): void
         +viewCalendar(): Calendar
         +viewMessages(): List<Message>
+        +viewTasks(): List<Task>
     }
 
     class Student {
         +tutorId: int
         --
-        +viewTasks(): List<Task>
         +pinMessage(messageId: int): void
     }
 
@@ -104,13 +104,12 @@ together {
 ' Relations
 User <|-- Student
 User <|-- Tutor
-Student "1" --right-- "1" Tutor : assigned to
-Student "1" --right-- "*" Task : has
+Student "*" --right-- "1" Tutor : assigned to
+User "1" --right-- "*" Task : has
 Tutor "1" --right-- "*" Task : assigns
 Student "1" --right-- "*" Appointment : participates
 Tutor "1" --right-- "*" Appointment : manages
-Message "*" --right-- "1" Student : receives
-Message "*" --right-- "1" Tutor : receives
+Message "*" --up-- "1" User : receives
 User "1" --down-- "1" Calendar : owns
 Calendar "1" --right-- "*" CalendarEvent : contains
 Appointment ..> CalendarEvent : creates
