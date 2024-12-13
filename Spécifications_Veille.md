@@ -1,60 +1,31 @@
 # Veille Technologique - HomeSkolar
 
-## React 18
+La veille technologique joue un rôle crucial dans la prise de décision concernant le choix des technologies dans un projet. En utilisant des outils de **flux RSS** tels que **Feedly**, il devient plus facile de centraliser et organiser les informations provenant de diverses sources spécialisées. Voici les principales ressources mobilisées nous permettant une vision d’ensemble concernant l’existant :
 
-### Sources surveillées
-- [Documentation officielle React](https://react.dev/)
-- [Blog React](https://legacy.reactjs.org/blog/)
+1. **SitePoint RSS Feed**
 
-### Intérêt pour HomeSkolar
-- Gestion optimale des états pour le système de messagerie en temps réel
-- Composants réutilisables pour l'interface utilisateur cohérente
-- Performances optimales pour les mises à jour de calendrier et tâches
-- Rendu côté client efficace pour une expérience utilisateur fluide
-- Grande communauté de développeurs pour un support continu
+Ressource majeure pour les développeurs web et designers, offrant des tutoriels, articles et cours sur les technologies web telles que HTML, CSS, JavaScript et PHP.
 
-## Spring Boot 
+1. **DZone RSS Feed**
 
-### Sources surveillées
-- [Spring Blog](https://spring.io/blog)
-- [Baeldung](https://www.baeldung.com/)
+Plateforme pour les développeurs et professionnels de la tech, offrant des contenus variés sur les langages de programmation, DevOps, cloud computing et microservices, avec des analyses et solutions pratiques partagées par des experts du domaine.
 
-### Intérêt pour HomeSkolar
-- Gestion native de la sécurité pour l'authentification élèves/tuteurs
-- Facilité d'implémentation des API REST pour la communication client/serveur
-- Support robuste pour la gestion des sessions utilisateurs
-- Architecture MVC idéale pour la gestion des données éducatives
-- Intégration simple avec les bases de données relationnelles
+1. **SD Times RSS Feed**
 
-## MySQL
+Fournit des informations essentielles sur le développement logiciel, couvrant les langages émergents, les outils de développement, les pratiques agiles et les tendances DevOps.
 
-### Sources surveillées
-- [MySQL Blog](https://blogs.oracle.com/mysql/)
-- [Planet MySQL](https://planet.mysql.com/)
+1. **Treehouse Blog RSS Feed**
 
-### Intérêt pour HomeSkolar
-- Gestion efficace des relations élèves/tuteurs
-- Stockage structuré des données de messagerie et calendrier
-- Performances élevées pour les requêtes fréquentes
-- Facilité de sauvegarde et maintenance
-- Excellente compatibilité avec Spring Boot
+Propose des ressources allant du développement web aux meilleures pratiques de l’industrie.
 
-## Justification du Choix
+1. **Spring Boot on Medium RSS Feed**
 
-Cette stack technologique est particulièrement adaptée pour HomeSkolar car :
+Ce flux offre des articles et des tutoriels pratiques sur Spring Boot. Il couvre des sujets allant des bases aux pratiques avancées, permettant aux développeurs de maîtriser les concepts clés et les meilleures pratiques de ce framework.
 
-1. **Fiabilité** : Technologies éprouvées avec un support à long terme
+1. **AWESOME React Weekly RSS Feed**
 
-2. **Évolutivité** : Facilité d'ajout de nouvelles fonctionnalités :
-   - Nouvelles fonctionnalités de tutorat
-   - Extensions du système de messagerie
-   - Améliorations du calendrier
+Flux hebdomadaire rassemblant les dernières actualités, articles et tutoriels sur React, l'une des bibliothèques JavaScript les plus populaires pour le développement d'interfaces utilisateur.
 
-3. **Maintenance** : Documentation riche et communautés actives permettant :
-   - Résolution rapide des problèmes
-   - Mises à jour régulières
-   - Support technique disponible
+1. **Flux MySQL Developpez RSS Feed**
 
-4. **Coût** : Solutions open-source réduisant les coûts de développement
-
-Cette stack offre un excellent compromis entre performances, facilité de développement et maintenabilité, répondant parfaitement aux besoins d'une plateforme éducative comme HomeSkolar.
+Propose des articles, des études de cas, des tutoriels et des mises à jour liées à MySQL. Il couvre des sujets allant de l'optimisation des performances à l'intégration de MySQL avec différentes technologies, en passant par des conseils pour gérer de grandes quantités de données de manière efficace et fiable.

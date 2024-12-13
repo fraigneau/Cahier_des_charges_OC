@@ -1,4 +1,7 @@
-# Backlog Produit HomeSkolar
+# Backlog Produit HomeSkolar prout
+
+!!!!!!!!add tableau, add determination de qui fais quelle tache ! Sprint 
+!!!!!!!! ajout cat test 
 
 ## À FAIRE
 

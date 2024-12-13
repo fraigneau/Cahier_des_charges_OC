@@ -2,7 +2,7 @@
 
 ' Layout configuration
 skinparam linetype ortho  
-skinparam padding 2
+skinparam padding 3
 
 skinparam class {
     BackgroundColor white
@@ -10,7 +10,7 @@ skinparam class {
 
 ' Placement hints
 together {
-    abstract class User
+    abstract User
     class Student
     class Tutor
 }
@@ -20,25 +20,6 @@ together {
     class Message
     class Appointment
 }
-
-together {
-    class Calendar
-    class CalendarEvent
-}
-
-    abstract class User {
-        +id: int
-        +name: string
-        +email: string
-        -password: string
-        --
-        +login(): boolean
-        +updateProfile(): void
-        +viewCalendar(): Calendar
-        +viewMessages(): List<Message>
-        +viewTasks(): List<Task>
-    }
-
     class Student {
         +tutorId: int
         --
@@ -52,23 +33,19 @@ together {
         +scheduleAppointment(appointment: Appointment): void
     }
 
-    class Calendar {
-        +userId: int
+    abstract class User {
+        +id: int
+        +name: string
+        +email: string
+        -password: string
+        +role : string
         --
-        +addEvent(event: CalendarEvent): void
-        +removeEvent(eventId: int): void
-    }
-
-    class CalendarEvent {
-        +title: string
-        +startDate: datetime
-        +type: EventType
-        --
-        +update(): void
-        +cancel(): void
+        +login(): boolean
+        +updateProfile(): void
     }
 
     class Task {
+        +id: int
         +title: string
         +description: string
         +dueDate: datetime
@@ -76,6 +53,9 @@ together {
         +assignedTo: int
         --
         +updateStatus(): void
+        +createTask():
+        +updateTask(taskId)
+        +deletTask(taskId)
     }
 
     class Message {
@@ -90,28 +70,27 @@ together {
     }
 
     class Appointment {
+        +id : int
         +title: string
         +dateTime: datetime
         +duration: int
         +tutorId: int
         +studentId: int
+        +type: AppointmentType
         --
-        +createTask(): Task
-        +addToCalendar(): CalendarEvent
+        +createAppointment():
+        +updateAppointment(appointmentId)
+        +deletAppointment(appointmenId)
     }
 
-
 ' Relations
-User <|-- Student
-User <|-- Tutor
-Student "*" --right-- "1" Tutor : assigned to
-User "1" --right-- "*" Task : has
-Tutor "1" --right-- "*" Task : assigns
-Student "1" --right-- "*" Appointment : participates
-Tutor "1" --right-- "*" Appointment : manages
-Message "*" --up-- "1" User : receives
-User "1" --down-- "1" Calendar : owns
-Calendar "1" --right-- "*" CalendarEvent : contains
-Appointment ..> CalendarEvent : creates
+User <|-up- Student
+User <|-up- Tutor
+
+Student "*" --left-- "1" Tutor : assigned to
+
+User "1" ---- "*" Task : has
+User "1" ---- "*" Appointment : participates
+User "1" ---- "*" Message : S/R
 
 @enduml

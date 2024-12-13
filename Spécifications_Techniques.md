@@ -15,7 +15,7 @@
   - Permet un développement rapide avec ses nombreux composants 
 
 - **Bibliothèques complémentaires** :
-  - React Router : Navigation entre les pages
+  - React Router : Navigation entre les pagesv
   - React Big Calendar : Gestion du calendrier
   - Bootstrap : Design responsive
 
