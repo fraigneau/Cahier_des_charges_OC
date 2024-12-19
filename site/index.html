@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanban Board</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f9;
+      }
+
+      .kanban {
+        display: flex;
+        gap: 20px;
+        width: 90%;
+        max-width: 1200px;
+      }
+
+      .column {
+        flex: 1;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+      }
+
+      .column h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        color: #333;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
+      }
+
+      .task {
+        background: #e8f0fe;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+        cursor: grab;
+      }
+
+      .task:active {
+        cursor: grabbing;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="kanban">
+      <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <h2>À faire</h2>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US1 - Créer un compte utilisateur
+        </div>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US2 - Connexion utilisateur
+        </div>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US4 - Messagerie élève-tuteur
+        </div>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US6 - Notifications pour les messages
+        </div>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US8 - Planifier des rendez-vous
+        </div>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US9 - Assigner des tâches après une rencontre
+        </div>
+      </div>
+      <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <h2>En cours</h2>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US3 - Réinitialiser le mot de passe
+        </div>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US7 - Vue calendrier des rendez-vous
+        </div>
+      </div>
+      <div class="column" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <h2>Terminé</h2>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US5 - Épingler les messages
+        </div>
+        <div class="task" draggable="true" ondragstart="drag(event)">
+          US10 - Créer des tâches personnelles
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function allowDrop(event) {
+        event.preventDefault();
+      }
+
+      function drag(event) {
+        event.dataTransfer.setData("text", event.target.id);
+      }
+
+      function drop(event) {
+        event.preventDefault();
+        const data = event.dataTransfer.getData("text");
+        const task = document.getElementById(data);
+        event.target.appendChild(task);
+      }
+
+      // Ajout d'identifiants uniques aux tâches
+      document.querySelectorAll(".task").forEach((task, index) => {
+        task.id = `task-${index}`;
+      });
+    </script>
+  </body>
+</html>
